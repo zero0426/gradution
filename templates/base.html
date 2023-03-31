@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <script src="{% static 'js/jquery-3.6.3.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <style>
+        .navbar{
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="introduce/"> 期权策略交易系统</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="/quotes/">查看行情</a></li>
+        {% block month %}{% endblock %}
+        <li><a href="/strategy/">生成策略</a></li>
+        {% block strategy %}{% endblock %}
+        <li><a href="/profit/">查看实时收益</a></li>
+        <li><a href="/update/">更新账户信息</a></li>
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request.session.info.username }} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/account_info/">资金账户信息</a></li>
+            <li><a href="http://127.0.0.1:8000/change_code/">修改密码</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="http://127.0.0.1:8000/logout/">退出登录</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+{% block js %}{% endblock %}
+{% block content %}{% endblock %}
+
+</body>
+</html>

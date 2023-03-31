@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% block title %}
+    <meta http-equiv="refresh" content="10">
+    <title>实时行情</title>
+{% endblock %}
+
+{% block month %}
+    <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">选择到期月份<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+          {% for month in date %}
+            <li><a href="/quotes/{{ month }}" id="{{ month }}">{{ month }}</a></li>
+          {% endfor %}
+          </ul>
+    </li>
+
+{% endblock %}
+
+{% block js %}
+{#    <script type="text/javascript">#}
+{#        function refresh(){#}
+{#            $.ajax({#}
+{#                url:'/refresh/',#}
+{#                type: "get",#}
+{#                data:{#}
+{#                    month : {{ now }},#}
+{#                },#}
+{#                dataType:"json",#}
+{#                success: function(res) {#}
+{#                    $("#left_table").text(res.call_info_list);#}
+{#                    $("#middle_table").text(res.call_info_list);#}
+{#                    $("#right_table").text(res.put_info_list);#}
+{##}
+{#                    console.log('success');#}
+{#                }#}
+{#            })#}
+{#        }#}
+        {#window.setInterval(refresh,5000)#}
+{#    </script>#}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-sm-6 text-center" style="background-color: #Eb6951" >看涨合约</div>
+        <div class="col-sm-6 text-center" style="background-color: #4bbc7c" >看跌合约</div>
+    </div>
+    <div class="content">
+        <div class="container">
+        <div class="left-group" id="left_table">
+        <table class="table">
+        <thead>
+        <tr>
+            <th>合约代码</th>
+            <th>买量</th>
+            <th>买价</th>
+            <th>最新价</th>
+            <th>卖价</th>
+            <th>卖量</th>
+            <th>持仓量</th>
+            <th>振幅 %</th>
+            <th>涨跌幅 %</th>
+        </tr>
+        </thead>
+        {% for item in call_info_list %}
+        <tr>
+            <th>{{ item.3 }}</th>
+            <th>{{ item.4 }}</th>
+            <th>{{ item.5 }}</th>
+            <th>{{ item.6 }}</th>
+            <th>{{ item.7 }}</th>
+            <th>{{ item.8 }}</th>
+            <th>{{ item.9 }}</th>
+            {% if item.42.0 == '-' %}
+                <th style="color: green">{{ item.42 }}</th>
+            {% elif item.42 == '0.00' %}
+                <th>{{ item.42 }}</th>
+            {% else %}
+                <th style="color: #b92c28">{{ item.42 }}</th>
+            {% endif %}
+            {% if item.10.0 == '-' %}
+                <th style="color: green">{{ item.10 }}</th>
+            {% elif item.10 == '0.00' %}
+                <th>{{ item.10 }}</th>
+            {% else %}
+                <th style="color: #b92c28">{{ item.10 }}</th>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </table>
+        </div>
+
+        <div class="mid-group" id="middle_table">
+            <table class="table">
+                <thead>
+                <tr><th>行权价</th></tr>
+                </thead>
+                {% for item in call_info_list %}
+                    <tr>
+                        <th style="color: #2aabd2">{{ item.11 }}</th>
+                    </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+        <div class="right-group" id="right_table">
+            <table class="table">
+        <thead>
+        <tr>
+            <th>涨跌幅 %</th>
+            <th>振幅 %</th>
+            <th>持仓量</th>
+            <th>卖量</th>
+            <th>卖价</th>
+            <th>最新价</th>
+            <th>买价</th>
+            <th>买量</th>
+            <th>合约代码</th>
+        </tr>
+        </thead>
+        {% for item in put_info_list %}
+        <tr>
+            {% if item.10.0 == '-' %}
+                <th style="color: green">{{ item.10 }}</th>
+            {% elif item.10 == '0.00' %}
+                <th>{{ item.10 }}</th>
+            {% else %}
+                <th style="color: #b92c28">{{ item.10 }}</th>
+            {% endif %}
+            {% if item.42.0 == '-' %}
+                <th style="color: green">{{ item.42 }}</th>
+            {% elif item.42 == '0.00' %}
+                <th>{{ item.42 }}</th>
+            {% else %}
+                <th style="color: #b92c28">{{ item.42 }}</th>
+            {% endif %}
+            <th>{{ item.9 }}</th>
+            <th>{{ item.8 }}</th>
+            <th>{{ item.7 }}</th>
+            <th>{{ item.6 }}</th>
+            <th>{{ item.5 }}</th>
+            <th>{{ item.4 }}</th>
+            <th>{{ item.3 }}</th>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+    </div>
+    </div>
+
+{#    {% for item in info_list %}#}
+{#        <div>{{ item }}</div>#}
+{#    {% endfor %}#}
+{% endblock %}

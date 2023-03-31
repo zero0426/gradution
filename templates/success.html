@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>交易执行中</title>
+{% endblock %}
+
+{% block content %}
+    <form action="http://127.0.0.1:8000/success/" method="post">
+    {% csrf_token %}
+        <h3>已生成交易单</h3>
+        <input type="checkbox" name="strategy" value="{{ strategy }}" checked="checked">
+        <h3>请确认交易执行完毕后点击此按钮</h3>
+        <input type="submit" value="提交">
+    </form>
+{% endblock %}

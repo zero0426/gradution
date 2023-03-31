@@ -1,0 +1,24 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+.head{
+            height: 100px;
+            width: 100%;
+            background-color: gold;
+            text-align: center;
+        }
+        .container{
+            position: absolute;
+            width: 100%;
+            display: flex;
+            top: 120px;
+        }
+        .left-group, .right-group{
+            width: 700px;
+            text-align: center;
+        }
+        .mid-group {
+            flex: 1;
+            text-align: center;
+        }

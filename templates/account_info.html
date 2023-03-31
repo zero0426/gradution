@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    <title>资金账户信息</title>
+    <style>
+        #row{
+            width:300px;
+            left:30px;
+        }
+    </style>
+{% endblock %}
+
+
+
+{% block content %}
+    <h2>账户基本信息</h2>
+    <ul class="list-group">
+    <li class="list-group-item" id="row">用户名：{{ username }}</li>
+    <li class="list-group-item" id="row">资金账号：{{ fund_account }}</li>
+    <li class="list-group-item" id="row">账号名称：{{ account_name }}</li>
+    <li class="list-group-item" id="row">总资产：{{ asset }}</li>
+    <li class="list-group-item" id="row">可用资金：{{ avail_funds }}</li>
+    </ul>
+    <h2>持仓信息</h2>
+    <table class="table" style="width: 800px">
+    <thead>
+    <tr>
+        <th>期权代码</th>
+        <th>期权简称</th>
+        <th>持有量</th>
+        <th>持仓价</th>
+        <th>持仓收益</th>
+        <th>持仓收益率</th>
+        <th>持仓类型</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for position in position_list %}
+        <tr>
+            <th>{{ position.0 }}</th>
+            <th>{{ position.1 }}</th>
+            <th>{{ position.2 }}</th>
+            <th>{{ position.3 }}</th>
+            {% if position.4 > 0 %}
+            <th style="color: #b92c28">{{ position.4 }}</th>
+            <th style="color: #b92c28">{{ position.5 }}</th>
+            {% elif position.4 < 0 %}
+            <th style="color: #4cae4c">{{ position.4 }}</th>
+            <th style="color: #4cae4c">{{ position.5 }}</th>
+            {% else %}
+            <th>{{ position.4 }}</th>
+            <th>{{ position.5 }}</th>
+            {% endif %}
+            <th>{{ position.6 }}</th>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}
